@@ -1,0 +1,332 @@
+'.source.supercollider':
+  'tempo':
+    'prefix': 'tempo'
+    'body': """
+    (
+    b = 60/165;
+    m = 16/b;
+    q = b * m;
+    p.clock.tempo=165/60;
+    p.quant=q;
+    )
+    """
+  'pseq':
+    'prefix': 'pseq'
+    'body': 'Pseq([4],inf)'
+  'pwrand':
+    'prefix': 'pwrand'
+    'body': 'Pwrand([d[\\\\bd]], [1].normalizeSum, inf)'
+  'random p':
+    'prefix': 'randomp'
+    'body': 'Pwrand([-0.2, -0.1, 0.1,0.2,0.25, 0.3], [1, 2, 3, 3, 2,1].normalizeSum, inf)'
+  'pcloop':
+    'prefix': 'pcloop'
+    'body': """
+    (
+    var loop = Pbind(
+        \\\\instrument,\\\\sampler,
+        \\\\buf, Pseq([d[][]],inf),
+        \\\\dur, Pseq([m],inf),
+        \\\\amp, 0.4,
+        \\\\pan, 0,
+        \\\\stretch, b
+    );
+    //y = Pfx(loop,\\\\bitcrush, \\\\bits, 6);
+    ~loop = Pseq([loop],inf)
+    )
+    ~loop.play
+    """
+  'pcdrum':
+    'prefix': 'pcdrum'
+    'body': """
+    (
+    var pc = Pbind(
+        \\\\instrument,\\\\sampler,
+        \\\\buf, Pseq([d[\\\\ebd][4],d[\\\\esn][10],d[\\\\sk][0],d[\\\\ech][0]],inf),
+        \\\\dur, Pseq([1,1,1,1],1),
+        \\\\amp, 0.4,
+        \\\\pan, 0,
+        \\\\stretch, b
+    );
+    y = Pfx(pc,\\\\bitcrush, \\\\bits, 6);
+    z = Pfx(pc,\\\\distort);
+    ~pc = Pseq([z,y,z,y,z],inf)
+    )
+    ~pc.play
+    """
+  'simpler':
+    'prefix': 'simpler'
+    'body': """
+    (
+    ~simp = Pbind(
+        \\\\instrument, \\\\simpler,
+        \\\\buf, Pseq([d[\\\\kt][0]],inf),
+        \\\\octave, Prand([3,4,5],inf),
+        \\\\degree, Pn(Plazy({Pseq([-4,0,5,7,9,12].scramble.clump(2),2)})),
+        \\\\dur, 16,
+        \\\\strum, Prand([1,5,7], inf),
+        \\\\strumEndsTogether, false,
+        \\\\loopStart, Pwhite(90000, 150000),
+        \\\\sampleStart, Pwhite(50000, 85000),
+        \\\\loopLen, 0.4,
+        \\\\fadeTime, 0.15,
+        \\\\attack, 0.25,
+        \\\\release, 4,
+        \\\\amp, 0.3
+    );
+    )
+    ~simp.play;
+    """
+
+  'glitchy':
+    'prefix': 'glitchy'
+    'body': """
+    (
+    var glitchy;
+    glitchy = Pbind(
+        \\\\instrument, \\\\glitch,
+        \\\\buf, Prand([d[\\\\solfege][2]],inf),
+        \\\\sus, Pwhite(0,1),
+        \\\\pos, Pwhite(0,2),
+        \\\\ratio, Pwhite(0.3,1.3),
+        \\\\disp, Pwhite(0,1),
+        \\\\amp, 0.09,
+        \\\\dur, Pseq([4],inf),
+        \\\\pan, Pwhite(-1,1),
+        \\\\loop, Prand([0,1],inf),
+        \\\\freq, Prand([220,440,555,333,188],inf)
+    );
+    ~glitchy = glitchy;
+    )
+    ~glitchy.play;
+    """
+  'scramble':
+    'prefix': 'scramble'
+    'body': """
+    (
+    ~scramble = Pbind(
+        \\\\instrument, \\\\scramble,
+        \\\\buf, Prand([d[\\\\glitch][4]],inf),
+        \\\\sus, Pwhite(0,3),
+        \\\\pos, Pwhite(0,2),
+        \\\\ratio, Pwhite(0.3,1.3),
+        \\\\disp, Pwhite(0,1),
+        \\\\amp, 0.2,
+        \\\\dur, Pseq([0.25,0.25,0.5,0.5,0.25,0.5,0.25,Rest(2)],inf),
+        \\\\pan, Pwhite(-1,1)
+    );
+    )
+    ~scramble.play;
+    """
+  'midiclock':
+    'prefix': 'midiclock'
+    'body': """
+    (
+    ~midiClock = Pbind(
+      \\\\type, \\\\midi,
+      \\\\midicmd, \\\\midiClock,
+      \\\\midiout, d[\\\\midi],
+      \\\\dur, Pseq([1/24], inf),
+      \\\\chan, 0
+    );
+    ~midiClock.play;
+    )
+    """
+  'midinote':
+    'prefix': 'midinote'
+    'body': """
+    (
+    ~stick = Pbind(
+      \\\\type, \\\\midi,
+      \\\\midicmd, \\\\noteOn,
+      \\\\midiout, d[\\\\midi],
+      \\\\chan, 1,
+      \\\\midinote, Pseq([60], inf),
+      \\\\dur, Pseq([1], inf),
+      \\\\amp, Pseq([1.0], inf)
+    );
+    )
+    """
+  'synth':
+    'prefix': 'synth'
+    'body': """
+    (
+    ~synth = Pbind(
+        \\\\type, \\\\midi,
+        \\\\midicmd, \\\\noteOn,
+        \\\\midiout, d[\\\\midisynth],
+        \\\\chan, 1,
+        \\\\degree, Pseq([0],inf),
+        \\\\dur, Pseq([8], inf),
+        \\\\amp, Pseq([1], inf),
+        \\\\scale, Scale.minor,
+        \\\\octave, [4]
+    );
+    )
+    ~synth.play();
+    """
+  'bd':
+    'prefix': 'bd'
+    'body': """
+    (
+    ~bd = Pbind(
+        \\\\instrument,\\\\sampler,
+        \\\\buf, d[\\\\b][0],
+        \\\\dur, Pseq([4],inf),
+        \\\\amp, 0.4,
+        \\\\pan, 0.1,
+        \\\\stretch, b
+    );
+    )
+    ~bd.play();
+    """
+  'sn':
+    'prefix': 'sn'
+    'body': """
+    (
+    ~sn = Pbind(
+        \\\\instrument,\\\\sampler,
+        \\\\buf, d[\\\\s][0],
+        \\\\dur, Pseq([4],inf),
+        \\\\amp, 0.3,
+        \\\\pan, -0.2,
+        \\\\stretch, b
+    );
+    )
+    ~sn.play();
+    """
+  'sk':
+    'prefix': 'sk'
+    'body': """
+    (
+    ~sk = Pbind(
+        \\\\instrument,\\\\sampler,
+        \\\\buf, d[\\\\sk][0],
+        \\\\dur, Pseq([4],inf),
+        \\\\amp, 0.4,
+        \\\\pan, -0.2,
+        \\\\stretch, b
+    );
+    )
+    ~sk.play();
+    """
+  'ch':
+    'prefix': 'ch'
+    'body': """
+    (
+    ~ch = Pbind(
+        \\\\instrument,\\\\sampler,
+        \\\\buf, d[\\\\ch][0],
+        \\\\dur, Pseq([4],inf),
+        \\\\amp, 0.3,
+        \\\\pan, -0.25,
+        \\\\stretch, b
+    );
+    )
+    ~ch.play();
+    """
+  'rd':
+    'prefix': 'rd'
+    'body': """
+    (
+    ~rd = Pbind(
+        \\\\instrument,\\\\sampler,
+        \\\\buf, d[\\\\rd][0],
+        \\\\dur, Pseq([4],inf),
+        \\\\amp, 0.125,
+        \\\\pan, 0.4,
+        \\\\stretch, b
+    );
+    )
+    ~rd.play();
+    """
+  'arcopizz':
+    'prefix': 'arcopizz'
+    'body': """
+    (
+    // Bass Arco Pizz
+    SynthDef(\\\\arcopizz, {arg in, out=0, vol=(-12), pregain=6, gain=8, bass_boost=7, eq_b=0.81, eq_m=0.74, eq_h=0.49, rev=0.25, room=0.1, attack=0.002, knee=5, ratio=5, release=0.3, threshold=18, cabinet=10, cab_bass=0.4, cab_treble=0.3;
+        var sig, arcopizz, bmix;
+        sig = SoundIn.ar(in);
+
+        arcopizz = FaustCabinetImpulseFormer.ar(
+            FaustPeaveyStyle.ar(
+                FaustPresenceLevel.ar(
+                    FaustBassbooster.ar(
+                        FaustAmpT2.ar(FaustDrive.ar(FaustValve.ar(sig,0.01,1),5), pregain, gain), bass_boost
+                    )
+                ), eq_b, eq_m, eq_h
+            ), cabinet, cab_bass, cab_treble
+        );
+
+        bmix = FreeVerb.ar(FaustVolume.ar(FaustBassEnhancer.ar(arcopizz, arcopizz, 190,4), vol), rev, room, 0,1);
+        Out.ar(out, bmix!2);
+    }).add;
+    )
+    a = Synth(\\\\arcopizz, [\\\\in, 1])
+    a.set(\\\\vol, 10)
+    """
+  'vox ac30':
+    'prefix': 'vox'
+    'body': """
+    (
+    // Vox AC30
+    SynthDef(\\\\ac30, {arg in, out=0, vol=(-12), pregain=7, gain=8, bass_boost=7, eq_b=0.41, eq_m=0.74, eq_h=0.59, rev=0.45, room=4.5, attack=0.002, knee=5, ratio=5, release=0.3, threshold=16, cabinet=10, cab_bass=0.5, cab_treble=0.4;
+        var sig, ac30;
+        sig = SoundIn.ar(in);
+        ac30 = Pan2.ar(
+            FreeVerb.ar(
+                FaustVolume.ar(
+                    FaustCabinetImpulseFormer.ar(
+                        FaustAC30Style.ar(
+                            FaustPresenceLevel.ar(
+                                FaustBassbooster.ar(
+                                    FaustAmpT2.ar(FaustValve.ar(sig,0.01,1), pregain, gain), bass_boost
+                                ),
+                            ), eq_b, eq_m, eq_h
+                        ), cabinet, cab_bass, cab_treble
+                    ), vol
+                ), rev, room
+            )
+        );
+        Out.ar(out, ac30!2);
+    }).add;
+    )
+
+    c = Synth(\\\\ac30, [\\\\in, 0])
+    c.set(\\\\vol, 20)
+    """
+  'princeton':
+    'prefix': 'princeton'
+    'body': """
+    (
+    SynthDef(\\\\princeton, {arg in, out=0, vol=(-12), pregain=7, gain=8, bass_boost=4, eq_b=0.61, eq_m=0.24, eq_h=0.59, rev=0.05, room=0.5, attack=0.002, knee=5, ratio=5, release=0.3, threshold=16, cabinet=10, cab_bass=0.3, cab_treble=0.4;
+        var sig, princeton;
+        sig = SoundIn.ar(in);
+        princeton = Pan2.ar(
+            FreeVerb.ar(
+                FaustVolume.ar(
+                    FaustCabinetImpulseFormer.ar(
+                        FaustPrincetonStyle.ar(
+                            FaustPresenceLevel.ar(
+                                FaustBassbooster.ar(
+                                    FaustAmpT2.ar(FaustValve.ar(sig,0.01,1), pregain, gain), bass_boost
+                                ),
+                            ), eq_b, eq_m, eq_h
+                        ), cabinet, cab_bass, cab_treble
+                    ), vol
+                ), rev, room
+            )
+        );
+
+        princeton = FaustCompressor.ar(princeton,0.002,3,2,0.5,-18);
+        princeton = FaustChorusMono.ar(FaustPhaserMono.ar(princeton));
+        princeton = princeton + (DelayC.ar(princeton,0.4,0.4)*0.3);
+        princeton = DriveNoise.ar(princeton);
+        Out.ar(out, princeton!2);
+    }).add;
+    )
+
+    c = Synth(\\\\princeton, [\\\\in, 0])
+    c.set(\\\\vol, 8)
+    """
