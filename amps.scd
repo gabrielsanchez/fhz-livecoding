@@ -1,19 +1,4 @@
 
-// FaustPreampImpulseFormer.ar(,
-// 	FaustImpulseResponse.ar(,
-// 		FaustSoftclip.ar(s
-//
-// 			FaustTransistorBuffer.ar(
-//
-// 				FaustCabinetImpulseFormer.ar(
-//
-// 					FaustShaper.ar(,
-
-
-
-)
-
-
 (
 // Fender Bassman
 SynthDef(\bassman, {arg in, out=0, vol=17, pregain=5, gain=5, disto=0, bass_boost=8, eq_b=0.51, eq_m=0.33, eq_h=0.37, rev=0.1, attack=0.02, knee=6, ratio=3, release=0.3, threshold=20;
@@ -167,4 +152,3 @@ SynthDef(\mbdistortion, {arg in, out=0, vol=50.1, pregain=10, gain=10, bass_boos
 )
 b.free;
 b = Synth(\mbdistortion, [\in, 1])
-

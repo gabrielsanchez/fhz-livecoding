@@ -9,40 +9,28 @@
  p.clock.tempo=120/60;
  p.quant=q;
  Task({
-    3.wait;
-    d = Dictionary.new;
-    d.add(\folders -> PathName(thisProcess.nowExecutingPath.dirname +/+ "samples/set").entries);
-    for (0, d[\folders].size-1,
-        {arg i; d.add(d[\folders][i].folderName.asSymbol -> d[\folders][i].entries.collect({
-            arg sf;
-            Buffer.read(s,sf.fullPath);
-        });
-    )});
-    ("SynthDefs.scd").loadRelative;
-    ("snippets.scd").loadRelative;
-    ("fx.scd").loadRelative;
-    //("effects.scd").loadRelative;
-    3.wait;
-    StageLimiter.activate;
-    MIDIClient.init;
-    10.wait;
-    //d[\midi] = MIDIOut.newByName("Scarlett 6i6 USB", "Scarlett 6i6 USB MIDI 1").latency = (0.2555);
-    //d[\midi] = MIDIOut.newByName("Midi Through", "Midi Through Port-0").latency_(Server.default.latency);
-    d[\midisynth] = MIDIOut.newByName("Midi Through", "Midi Through Port-0").latency_(0.2555);
-    d[\midi] = MIDIOut.newByName("Scarlett 6i6 USB", "Scarlett 6i6 USB MIDI 1").latency_(0.2555);
-    d[\midi].midiClock;
-    d[\midi].start;
-    d[\midisynth].start;
-    //d[\midi].stop;
-    3.wait;
-    ~midiClock = Pbind(
-      \type, \midi,
-      \midicmd, \midiClock,
-      \midiout, d[\midi],
-      \dur, Pseq([1/24], inf),
-      \chan, 0
-    );
-    1.wait;
-    ~midiClock.play;
+ 	3.wait;
+  	d = Dictionary.new;
+  	d.add(\folders -> PathName(thisProcess.nowExecutingPath.dirname +/+ "samples/set").entries);
+	for (0, d[\folders].size-1,
+		{arg i; d.add(d[\folders][i].folderName.asSymbol -> d[\folders][i].entries.collect({
+			arg sf;
+			Buffer.read(s,sf.fullPath);
+		});
+	)});
+  	("SynthDefs.scd").loadRelative;
+  	("snippets.scd").loadRelative;
+  	("fx.scd").loadRelative;
+  	//("effects.scd").loadRelative;
+  	3.wait;
+  	StageLimiter.activate;
+	MIDIClient.init;
+	//d[\midi] = MIDIOut.newByName("Scarlett 6i6 USB", "Scarlett 6i6 USB MIDI 1").latency = (0.2555);
+	d[\midisynth] = MIDIOut.newByName("Midi Through", "Midi Through Port-0").latency_(0.2555);
+	//d[\midi] = MIDIOut.newByName("ZynAddSubFX", "ZynAddSubFX").latency_(0.2555);
+	//d[\midi] = MIDIOut.newByName("Scarlett 6i6 USB", "Scarlett 6i6 USB MIDI 1").latency_(0.2555);
+	//d[\midi].midiClock;
+	d[\midisynth].start;
+	//d[\midi].stop;
  }).start;
  )
