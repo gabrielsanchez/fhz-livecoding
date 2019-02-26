@@ -18,10 +18,9 @@
 			Buffer.read(s,sf.fullPath);
 		});
 	)});
-  	("SynthDefs.scd").loadRelative;
+  	("synthdefs.scd").loadRelative;
   	("snippets.scd").loadRelative;
   	("fx.scd").loadRelative;
-  	//("effects.scd").loadRelative;
   	3.wait;
   	StageLimiter.activate;
 	MIDIClient.init;
