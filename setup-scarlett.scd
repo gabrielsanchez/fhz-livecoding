@@ -1,14 +1,14 @@
 (
- s.options.numBuffers = 1024 * 16;
- s.options.memSize = 8192 * 64;
- s.boot;
- p=ProxySpace.push(s);
- p.makeTempoClock;
- b = 60/120;
- q = b * 8;
- p.clock.tempo=120/60;
- p.quant=q;
- Task({
+s.options.numBuffers = 1024 * 16;
+s.options.memSize = 8192 * 64;
+s.boot;
+p=ProxySpace.push(s);
+p.makeTempoClock;
+b = 60/120;
+q = b * 8;
+p.clock.tempo=120/60;
+p.quant=q;
+Task({
     3.wait;
     d = Dictionary.new;
     d.add(\folders -> PathName(thisProcess.nowExecutingPath.dirname +/+ "samples/set").entries);
@@ -25,7 +25,6 @@
     StageLimiter.activate;
     MIDIClient.init;
     10.wait;
-    //d[\midi] = MIDIOut.newByName("Scarlett 6i6 USB", "Scarlett 6i6 USB MIDI 1").latency = (0.2555);
     //d[\midi] = MIDIOut.newByName("Midi Through", "Midi Through Port-0").latency_(Server.default.latency);
     d[\midisynth] = MIDIOut.newByName("Midi Through", "Midi Through Port-0").latency_(0.2555);
     d[\midi] = MIDIOut.newByName("Scarlett 6i6 USB", "Scarlett 6i6 USB MIDI 1").latency_(0.2555);
@@ -43,5 +42,5 @@
     );
     1.wait;
     ~midiClock.play;
- }).start;
- )
+}).start;
+)
