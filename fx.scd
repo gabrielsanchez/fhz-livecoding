@@ -28,7 +28,7 @@ SynthDef(\bitcrush, { arg out=0, bits=12;
 }, [\ir, 0]).add;
 
 // taken from http://sccode.org/1-4XD
-SynthDef(\dissonator, { arg out = 0, mix = 1.0;
+SynthDef(\dissonator, { arg out=0, mix=1.0;
     var filterfreqs = Array.geom(23, 60, 2**(1/3));
     var rq = ((2**(1/3)) - 1) / (2**(1/6));
     var width = 2**(1/6);
@@ -44,4 +44,23 @@ SynthDef(\dissonator, { arg out = 0, mix = 1.0;
     snd = Mix(snd);
     ReplaceOut.ar(out, snd);
 }, [\ir, 0]).add;
+
+SynthDef(\rlpf, { arg out=0, freq=400;
+    var in;
+    in = In.ar(out, 2);
+    Out.ar(out, RLPF.ar(in, freq))
+}, [\ir, 0]).add;
+
+SynthDef(\lpf, { arg out=0, freq=400;
+    var in;
+    in = In.ar(out, 2);
+    Out.ar(out, LPF.ar(in, freq))
+}, [\ir, 0]).add;
+
+SynthDef(\hpf, { arg out=0, freq=400;
+    var in;
+    in = In.ar(out, 2);
+    Out.ar(out, HPF.ar(in, freq))
+}, [\ir, 0]).add;
+
 )

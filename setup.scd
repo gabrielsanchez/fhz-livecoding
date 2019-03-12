@@ -19,7 +19,7 @@ Task({
         });
     )});
     ("synthdefs.scd").loadRelative;
-    ("snippets.scd").loadRelative;
+    //("snippets.scd").loadRelative;
     ("fx.scd").loadRelative;
     3.wait;
     StageLimiter.activate;
