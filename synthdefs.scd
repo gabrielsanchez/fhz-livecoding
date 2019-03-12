@@ -1,5 +1,5 @@
 (
-SynthDef(\sampler, {arg out = 0, buf = 0, rate = 1, amp = 0.5, pan = 0, pos = 0, rel=15;
+SynthDef(\sampler, {arg out=0, buf=0, rate=1, amp=0.5, pan=0, pos=0, rel=15;
     var sig, env;
     sig = Mix.ar(PlayBuf.ar(2,buf,BufRateScale.ir(buf) * rate,1,BufDur.kr(buf)*pos*44100,doneAction:2));
     env = EnvGen.ar(Env.linen(0.0,rel,0),doneAction:2);
@@ -8,7 +8,7 @@ SynthDef(\sampler, {arg out = 0, buf = 0, rate = 1, amp = 0.5, pan = 0, pos = 0,
     Out.ar(out, Pan2.ar(sig,pan));
 }).add;
 
-SynthDef(\msampler, {arg out = 0, buf = 0, rate = 1, amp = 0.5, pan = 0, pos = 0, rel=15;
+SynthDef(\msampler, {arg out=0, buf=0, rate=1, amp=0.5, pan=0, pos=0, rel=15;
     var sig, env;
     sig = Mix.ar(PlayBuf.ar(1,buf,BufRateScale.ir(buf) * rate,1,BufDur.kr(buf)*pos*44100,doneAction:2));
     env = EnvGen.ar(Env.linen(0.0,rel,0),doneAction:2);
