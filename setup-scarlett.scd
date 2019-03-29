@@ -9,7 +9,7 @@ q = b * 8;
 p.clock.tempo=120/60;
 p.quant=q;
 Task({
-    3.wait;
+    5.wait;
     d = Dictionary.new;
     d.add(\folders -> PathName(thisProcess.nowExecutingPath.dirname +/+ "samples/set").entries);
     for (0, d[\folders].size-1,
@@ -19,9 +19,8 @@ Task({
         });
     )});
     ("synthdefs.scd").loadRelative;
-    ("snippets.scd").loadRelative;
     ("fx.scd").loadRelative;
-    3.wait;
+    5.wait;
     StageLimiter.activate;
     MIDIClient.init;
     10.wait;
