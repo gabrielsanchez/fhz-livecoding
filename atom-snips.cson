@@ -10,6 +10,27 @@
     p.quant=q;
     )
     """
+  'pfx-reverb':
+    'prefix': 'pfx-reverb'
+    'body': 'Pfx(loop, \\\\platereverb, \\\\decay, 0.1, \\\\bandwidth, 0.9, \\\\damping, 0.0005)'
+  'pfx-chorus':
+    'prefix': 'pfx-chorus'
+    'body': 'Pfx(loop, \\\\chorus, \\\\freq, 2, \\\\level, 0.5, \\\\wet_dry, 100)'
+  'pfx-flanger':
+    'prefix': 'pfx-flanger'
+    'body': 'Pfx(loop, \\\\chorus, \\\\lfobpm, 24, \\\\level, 0, \\\\wet_dry, 100)'
+  'pfx-phaser':
+    'prefix': 'pfx-phaser'
+    'body': 'Pfx(loop, \\\\phaser, \\\\lfobpm, 24, \\\\level, 0, \\\\wet_dry, 100)'
+  'pfx-ringmodulator':
+    'prefix': 'pfx-ringmodulator'
+    'body': 'Pfx(loop, \\\\ringmodulator, \\\\freq, 240, \\\\wet_dry, 0.5)'
+  'pfx-bitdowner':
+    'prefix': 'pfx-bitdowner'
+    'body': 'Pfx(loop, \\\\bitdowner, \\\\bits, 12)'
+  'pfx-enhancer':
+    'prefix': 'pfx-enhancer'
+    'body': 'Pfx(loop, \\\\enhancer, \\\\delay, 0, \\\\freq, 0)'
   'pseq':
     'prefix': 'pseq'
     'body': 'Pseq([4],inf)'
@@ -245,7 +266,7 @@
     'body': """
     (
     // Bass Arco Pizz
-    SynthDef(\\\\arcopizz, {arg in, out=0, vol=(-12), pregain=6, gain=8, bass_boost=7, eq_b=0.81, eq_m=0.74, eq_h=0.49, rev=0.25, room=0.1, attack=0.002, knee=5, ratio=5, release=0.3, threshold=18, cabinet=10, cab_bass=0.4, cab_treble=0.3;
+    SynthDef(\\\\arcopizz, {arg in, out=0, vol=(-12), pregain=6, gain=8, bass_boost=4, eq_b=0.51, eq_m=0.74, eq_h=0.49, rev=0.25, room=0.1, attack=0.002, knee=5, ratio=5, release=0.3, threshold=18, cabinet=10, cab_bass=0.4, cab_treble=0.3;
         var sig, arcopizz, bmix;
         sig = SoundIn.ar(in);
 
